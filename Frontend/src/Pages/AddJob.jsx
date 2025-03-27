@@ -1,88 +1,274 @@
-import React from 'react'
+import React, { useState } from "react";
 import img from "../Assets/JobPosting.png";
+import axios from "axios";
 const AddJob = () => {
+  const [formData, setFormData] = useState({
+    companyName: "",
+    logoUrl: "",
+    position: "",
+    CTC: "",
+    jobType: "",
+    jobMode: "",
+    location: "",
+    jobDesc: "",
+    aboutCompany: "",
+    skills: [],
+    companySize:"",
+    information: "",
+  });
+  
+  const [skillInput,setSkillInput]=useState("");
+
+  const handleSkillAdd = (e) => {
+    if (e.key === "Enter" && skillInput.trim()) {
+      e.preventDefault();
+      setFormData((prev) => ({
+        ...prev,
+        skills: [...prev.skills, skillInput.trim()],
+      }));
+      setSkillInput("");
+    }
+  };
+
+
+  const handleRemoveSkill = (skill) => {
+    setFormData((prev) => ({
+      ...prev,
+      skills: prev.skills.filter((s) => s !== skill),
+    }));
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleJobSubmit = async (e) => {
+    e.preventDefault();
+    try {
+    const res = await axios.post(
+      "http://localhost:3000/api/jobs/addJob",
+      formData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("token"),
+        },
+      }
+    );
+    if (res.status === 201) {
+      alert(res.data.message);
+      setFormData({
+        companyName: "",
+    logoUrl: "",
+    position: "",
+    CTC: "",
+    jobType: "",
+    jobMode: "",
+    location: "",
+    jobDesc: "",
+    aboutCompany: "",
+    skills: [],
+    companySize:"",
+    information: "",
+      });
+    }
+} catch (error) {
+        alert(error);
+}
+  };
   return (
     <div className='flex justify-between'>
-    <div className="w-[40vw] p-10 bg-white">
-        <h1 className="text-3xl font-bold mb-6">Add job description</h1>
-        <form class="space-y-2">
-            <div class="flex items-center space-x-4">
-                <label class="w-1/4 font-semibold">Company Name</label>
-                <input type="text" placeholder="Enter your company name here" class="w-3/4 px-3 py-2 border rounded-md" />
-            </div>
-            
-            <div class="flex items-center space-x-4">
-                <label class="w-1/4 font-semibold">Add logo URL</label>
-                <input type="text" placeholder="Enter the link" class="w-3/4 px-3 py-2 border rounded-md" />
-            </div>
-            
-            <div class="flex items-center space-x-4">
-                <label class="w-1/4 font-semibold">Job Position</label>
-                <input type="text" placeholder="Enter job position" class="w-3/4 px-3 py-2 border rounded-md" />
-            </div>
-            
-            <div class="flex items-center space-x-4">
-                <label class="w-1/4 font-semibold">Monthly Salary</label>
-                <input type="number" placeholder="Enter Amount in rupees" class="w-3/4 px-3 py-2 border rounded-md" />
-            </div>
-            
-            <div class="flex items-center space-x-4">
-                <label class="w-1/4 font-semibold">Job Type</label>
-                <select class="w-3/4 px-3 py-2 border rounded-md">
-                <option>Select</option>
-                    <option>Full Time</option>
-                    <option>Part Time</option>
-                </select>
-            </div>
-            
-            <div class="flex items-center space-x-4">
-                <label class="w-1/4 font-semibold">Remote/Office</label>
-                <select class="w-3/4 px-3 py-2 border rounded-md">
-                    <option>Select</option>
-                    <option>Remote</option>
-                    <option>Office</option>
-                </select>
-            </div>
-            
-            <div class="flex items-center space-x-4">
-                <label class="w-1/4 font-semibold">Location</label>
-                <input type="text" placeholder="Enter Location" class="w-3/4 px-3 py-2 border rounded-md" />
-            </div>
-            
-            <div class="flex items-center space-x-4">
-                <label class="w-1/4 font-semibold">Job Description</label>
-                <textarea placeholder="Type the job description" class="w-3/4 px-3 py-2 border rounded-md"></textarea>
-            </div>
-            
-            <div class="flex items-center space-x-4">
-                <label class="w-1/4 font-semibold">About Company</label>
-                <textarea placeholder="Type about your company" class="w-3/4 px-3 py-2 border rounded-md"></textarea>
-            </div>
-            
-            <div class="flex items-center space-x-4">
-                <label class="w-1/4 font-semibold">Skills Required</label>
-                <input type="text" placeholder="Enter the must have skills" class="w-3/4 px-3 py-2 border rounded-md" />
-            </div>
-            
-            <div class="flex items-center space-x-4">
-                <label class="w-1/4 font-semibold">Additional Information</label>
-                <input type="text" placeholder="Enter the additional information" class="w-3/4 px-3 py-2 border rounded-md" />
-            </div>
-            
-            <div class="flex justify-end gap-5 mt-4">
-                <button type="button" class="cursor-pointer px-5 py-2 border rounded-md text-gray-500">Cancel</button>
-                <button type="submit" class="cursor-pointer px-5 py-2 bg-[#ED5353] text-white rounded-md">+ Add Job</button>
-            </div>
-        </form>
-    </div>
-    <div className="w-[40vw]  text-white">
-        <h2 className="absolute top-10 right-30 text-3xl font-semibold mb-4">Recruiter add job details here</h2>
-        <div className="rounded-lg flex items-center justify-center">
-            <img src={img} alt="Illustration" />
-        </div>
-    </div>
-    </div>
-  )
-}
+      <div className='w-[40vw] p-10 bg-white'>
+        <h1 className='text-3xl font-bold mb-6'>Add job description</h1>
+        <form onSubmit={handleJobSubmit} className='space-y-2'>
+          <div className='flex items-center space-x-4'>
+            <label className='w-1/4 font-semibold'>Company Name</label>
+            <input
+              type='text'
+              placeholder='Enter your company name here'
+              className='w-3/4 px-3 py-2 border rounded-md'
+              name='companyName'
+              value={formData.companyName}
+              onChange={handleChange}
+            />
+          </div>
 
-export default AddJob
+          <div className='flex items-center space-x-4'>
+            <label className='w-1/4 font-semibold'>Add logo URL</label>
+            <input
+              type='text'
+              placeholder='Enter the link'
+              className='w-3/4 px-3 py-2 border rounded-md'
+              name='logoUrl'
+              value={formData.logoUrl}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className='flex items-center space-x-4'>
+            <label className='w-1/4 font-semibold'>Job Position</label>
+            <input
+              type='text'
+              placeholder='Enter job position'
+              className='w-3/4 px-3 py-2 border rounded-md'
+              name='position'
+              value={formData.position}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className='flex items-center space-x-4'>
+            <label className='w-1/4 font-semibold'>CTC/Stipend</label>
+            <input
+              type='text'
+              placeholder='Enter Amount in rupees'
+              className='w-3/4 px-3 py-2 border rounded-md'
+              name='CTC'
+              value={formData.CTC}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className='flex items-center space-x-4'>
+            <label className='w-1/4 font-semibold'>Job Type</label>
+            <select
+              className='w-3/4 px-3 py-2 border rounded-md'
+              name='jobType'
+              value={formData.jobType}
+              onChange={handleChange}>
+              <option>Select</option>
+              <option>Full Time</option>
+              <option>Part Time</option>
+              <option>Internship</option>
+            </select>
+          </div>
+
+          <div className='flex items-center space-x-4'>
+            <label className='w-1/4 font-semibold'>Remote/Office</label>
+            <select
+              className='w-3/4 px-3 py-2 border rounded-md'
+              name='jobMode'
+              value={formData.jobMode}
+              onChange={handleChange}>
+              <option>Select</option>
+              <option>Remote</option>
+              <option>Office</option>
+              <option>Hybrid</option>
+            </select>
+          </div>
+
+          <div className='flex items-center space-x-4'>
+            <label className='w-1/4 font-semibold'>Location</label>
+            <input
+              type='text'
+              placeholder='Enter Location'
+              className='w-3/4 px-3 py-2 border rounded-md'
+              name='location'
+              value={formData.location}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className='flex items-center space-x-4'>
+            <label className='w-1/4 font-semibold'>Job Description</label>
+            <textarea
+              placeholder='Type the job description'
+              className='w-3/4 px-3 py-2 border rounded-md'
+              name='jobDesc'
+              value={formData.jobDesc}
+              onChange={handleChange}></textarea>
+          </div>
+
+          <div className='flex items-center space-x-4'>
+            <label className='w-1/4 font-semibold'>About Company</label>
+            <textarea
+              placeholder='Type about your company'
+              className='w-3/4 px-3 py-2 border rounded-md'
+              name='aboutCompany'
+              value={formData.aboutCompany}
+              onChange={handleChange}></textarea>
+          </div>
+        
+          <div className='flex items-center space-x-4'>
+            <label className='w-1/4 font-semibold'>Skills Required</label>
+            <input
+              type='text'
+              placeholder='Enter the must have skills'
+              className='w-3/4 px-3 py-2 border rounded-md'
+              name='skills'
+              value={skillInput}
+              onKeyDown={handleSkillAdd}
+              onChange={(e)=>setSkillInput(e.target.value)} 
+            />
+            </div>
+            <div className='flex space-x-3 my-2 ml-35'>
+                {formData.skills.map((skill,index)=>{
+                    return <div key={index}
+                    className='flex items-center bg-red-100 rounded-lg overflow-hidden'>
+                    <span className='px-2 py-1 text-black text-sm'>{skill}</span>
+                    <button className='bg-[#ED5353] px-1 py-1 text-white text-sm' onClick={()=>handleRemoveSkill(skill)}>✕</button>
+                  </div>
+                })}
+              
+            </div>         
+         
+            <div className='flex items-center space-x-4'>
+            <label className='w-1/4 font-semibold'>Company Size</label>
+            <select
+              className='w-3/4 px-3 py-2 border rounded-md'
+              name='companySize'
+              value={formData.companySize}
+              onChange={handleChange}>
+              <option>Select</option>
+              <option>0-10</option>
+              <option>11-50</option>
+              <option>51-200</option>
+              <option>201-500</option>
+              <option>501-1000</option>
+              <option>1K+</option>
+            </select>
+          </div>
+
+          <div className='flex items-center space-x-4'>
+            <label className='w-1/4 font-semibold'>
+              Additional Information
+            </label>
+            <input
+              type='text'
+              placeholder='Enter the additional information'
+              className='w-3/4 px-3 py-2 border rounded-md'
+              name='information'
+              value={formData.information}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className='flex justify-end gap-5 mt-4'>
+            <button
+              type='button'
+              className='cursor-pointer px-5 py-2 border rounded-md text-gray-500'>
+              Cancel
+            </button>
+            <button
+              type='submit'
+              className='cursor-pointer px-5 py-2 bg-[#ED5353] text-white rounded-md'
+            >
+              + Add Job
+            </button>
+          </div>
+        </form>
+      </div>
+      <div className='w-[40vw]  text-white'>
+        <h2 className='absolute top-10 right-30 text-3xl font-semibold mb-4'>
+          Recruiter add job details here
+        </h2>
+        <div className='rounded-lg flex items-center justify-center'>
+          <img src={img} alt='Illustration' />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default AddJob;

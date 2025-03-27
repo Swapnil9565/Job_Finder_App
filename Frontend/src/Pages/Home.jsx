@@ -6,7 +6,6 @@ import JobLists from "../Components/JobLists"
 const Home = () => {
   return (
     <div>
-        <Navbar/>
         <JobSearchArea/>
         <JobLists/>
     </div>

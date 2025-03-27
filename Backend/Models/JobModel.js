@@ -12,7 +12,7 @@ const jobSchema=mongoose.Schema({
         type:String,
         required:true
     },
-    salary:{
+    CTC:{
         type:String,
         required:true
     },
@@ -40,6 +40,10 @@ const jobSchema=mongoose.Schema({
     skills:{
         type:[String],
         required:true
+    },
+    companySize:{
+        type:String,
+        enum:["0-10","11-50","51-200","201-500","501-1000","1K+"]
     },
     information:{
         type:String

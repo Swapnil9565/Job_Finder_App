@@ -10,13 +10,14 @@ router.post("/addJob",authMiddleware, async (req, res) => {
     companyName,
     logoUrl,
     position,
-    salary,
+    CTC,
     jobType,
     jobMode,
     location,
     jobDesc,
     aboutCompany,
     skills,
+    companySize,
     information,
   } = req.body;
 
@@ -25,18 +26,19 @@ router.post("/addJob",authMiddleware, async (req, res) => {
         companyName,
         logoUrl,
         position,
-        salary,
+        CTC,
         jobType,
         jobMode,
         location,
         jobDesc,
         aboutCompany,
         skills,
+        companySize,
         information,
         createdBy:req.user.id
       });
     
-      res.status(201).json({message:"Job created Successfully",job});
+      res.status(201).json({message:"Job Added Successfully",job});
   } catch (error) {
     res.status(500).json({message:error.message});
   }
@@ -58,7 +60,7 @@ router.get("/allJobs",async(req,res)=>{
 })
 
 //Fetch job by id
-router.get("/jobDetails/:id",authMiddleware,async(req,res)=>{
+router.get("/jobDetails/:id",async(req,res)=>{
     const {id}=req.params;
     try {
         const jobDetails=await JobModel.findById(id);
