@@ -1,4 +1,5 @@
 import React,{useState} from 'react'
+import toast, { Toaster } from 'react-hot-toast';
 import { useAuth } from '../Context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -24,11 +25,10 @@ const JobCards = ({job}) => {
       });
       if(res.status===200){
         setJobDetails(res.data.jobDetails);
-        console.log(res.data);
         navigate(`/jobDetails/${id}`,{ state: { jobDetails: res.data.jobDetails } });
       }
     } catch (error) {
-      alert(error);
+      toast.error(error);
     }
   
   }
@@ -60,54 +60,72 @@ const JobCards = ({job}) => {
    };
  
   return (
-  <div className='w-3/4 px-5 pt-5 pb-2 rounded-md mt-10 shadow-[0px_4px_10px_#FF202040]  mx-auto'>
-   <div className=' flex justify-between'>
-    <div className='flex gap-3'>
-      <div className="logo">
-        <img src={job?.logoUrl || "https://dummyimage.com/50/000/fff"} alt="" width={50}/>
-      </div>
-      <div className='flex flex-col gap-2'>
-        <h1 className='font-bold text-lg'>{job?.position}</h1>
-        <div className='flex items-center gap-5 text-[#717b9e]'>
-          <div className='flex items-center gap-1'>
-          <FontAwesomeIcon icon={faBriefcase}/>
-          <span className=''>{job?.experience} years</span>
+    <div className='w-[90vw]  md:w-3/4 px-2 md:px-5 pt-5 pb-2 rounded-md mt-10 shadow-[0px_4px_10px_#FF202040] mx-auto bg-white'>
+    <Toaster position='top-center' reverseOrder={false} />
+    <div className='flex flex-col md:flex-row justify-between gap-4'>
+      {/* Left Side - Job Info */}
+      <div className='flex flex-col md:flex-row gap-3'>
+        <div className='logo flex justify-center md:block'>
+          <img src={job?.logoUrl || 'https://dummyimage.com/50/000/fff'} alt='' className='rounded-md w-[100px] md:w-[50px]' />
+        </div>
+        <div className='flex flex-col gap-2 text-center md:text-left'>
+          <h1 className='font-bold text-lg'>{job?.position}</h1>
+          <div className='flex flex-wrap justify-center md:justify-start gap-3 text-[#717b9e]'>
+            <div className='flex items-center gap-1'>
+              <FontAwesomeIcon icon={faBriefcase} />
+              <span>{job?.experience} years</span>
+            </div>
+            <div className='flex items-center gap-1'>
+              <FontAwesomeIcon icon={faUserGroup} />
+              <span>{job?.companySize}</span>
+            </div>
+            <div className='flex items-center gap-1'>
+              <FontAwesomeIcon icon={faIndianRupeeSign} />
+              {job?.jobType === 'Internship' ? (
+                <span>{job?.CTC} Per Month</span>
+              ) : (
+                <span>{job?.CTC} Lacs P.A.</span>
+              )}
+            </div>
+            <div className='flex items-center gap-1'>
+              <FontAwesomeIcon icon={faLocationDot} />
+              <span>{job?.location}</span>
+            </div>
           </div>
-          <div className='flex items-center gap-1'>
-          <FontAwesomeIcon icon={faUserGroup}/>
-          <span className=''>{job?.companySize}</span>
-          </div>
-          <div className='flex items-center gap-1'>
-          <FontAwesomeIcon icon={faIndianRupeeSign}/>
-          {job.jobType=="Internship"?<span className=''>{job?.CTC} Per Month</span>:<span className=''>{job?.CTC} Lacs P.A.</span>}
-          </div>
-          <div className='flex gap-2 items-center'>
-          <FontAwesomeIcon icon={faLocationDot}/>
-          <span>{job?.location}</span>
+          <div className='flex gap-3 justify-center md:justify-start text-[#ED5353] font-semibold text-sm'>
+            <p>{job?.jobType}</p>
+            <p>{job?.jobMode}</p>
           </div>
         </div>
-        <div className='flex gap-5 text-[#ED5353] font-semibold text-sm'>
-          <p>{job?.jobType}</p>
-          <p>{job?.jobMode}</p>
+      </div>
+
+      {/* Right Side - Actions */}
+      <div className='flex flex-col items-center md:items-end gap-3'>
+        <div className='flex flex-wrap gap-2 justify-center md:justify-end'>
+          {job?.skills.map((skill) => (
+            <p className='bg-[#FFEEEE] px-3 py-1 text-sm font-semibold rounded-md' key={skill}>{skill}</p>
+          ))}
+        </div>
+        <div className='flex gap-3 mt-2'>
+          {isLoggedIn && (
+            <button
+              className='cursor-pointer text-sm md:text-base text-[#ED5353] bg-white rounded-md px-3 py-1 border-2 border-[#ED5353] hover:bg-[#ED5353] hover:text-white transition-all'
+              onClick={() => navigate(`/editJob/${job._id}`)}
+            >
+              Edit Job
+            </button>
+          )}
+          <button
+            className='text-sm md:text-base bg-[#ED5353] text-white rounded-md px-3 cursor-pointer py-1 hover:opacity-80 transition-all'
+            onClick={() => viewJobDetails(job._id)}
+          >
+            View Details
+          </button>
         </div>
       </div>
     </div>
-    <div className='flex flex-col items-end'>
-       <div className='flex gap-5'>
-        {job?.skills.map((skill)=>{
-          return  <p className='bg-[#FFEEEE] p-2 font-semibold' key={skill}>{skill}</p>
-        })}
-       </div>
-       <div className='mt-5 flex gap-5'>
-         {isLoggedIn&& <button className='text-[#ED5353] bg-white rounded-md px-2 py-1 cursor-pointer border-2 border-[#ED5353]' onClick={()=>navigate(`/editJob/${job._id}`)}>Edit Job</button>}
-          <button className='bg-[#ED5353] text-white rounded-md px-2 py-1 cursor-pointer' onClick={()=>viewJobDetails(job._id)}>View Details</button>
-       </div>
-    </div>
-   </div>   
-   
-   <p className='text-[#717b9e] text-sm mt-3'>Posted: {convertFormat(job.postedOn)}</p>
-  
-</div>
+    <p className='text-[#717b9e] text-sm mt-3'>{convertFormat(job.postedOn)}</p>
+  </div>
 
   )
 }

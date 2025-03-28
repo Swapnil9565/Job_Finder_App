@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import toast,{Toaster} from "react-hot-toast";
 import {useNavigate,useParams} from "react-router-dom";
 import img from "../Assets/JobPosting.png";
 import axios from "axios";
@@ -58,7 +59,7 @@ const AddJob = () => {
           setFormData(res.data.jobDetails);
         }
       } catch (error) {
-        alert(error);
+        toast.error(error.response.data.message);
       }
     }
    
@@ -80,7 +81,7 @@ const AddJob = () => {
           }
         })
         if(res.status===200){
-          alert(res.data.message);
+          toast.success(res.data.message);
           navigate("/");
         }
         
@@ -98,7 +99,8 @@ const AddJob = () => {
         }
       );
       if (res.status === 201) {
-        alert(res.data.message);
+        toast.success(res.data.message);
+        navigate("/");
         setFormData({
           companyName: "",
           logoUrl: "",
@@ -117,20 +119,20 @@ const AddJob = () => {
       }
     }
     } catch (error) {
-      alert(error);
+      toast.error(error.response.data.message);
     }
   };
   return (
-    <div className='flex justify-between'>
-      <div className='w-[50vw] p-10 bg-white'>
-        <h1 className='text-3xl font-bold mb-6'>{id?"Edit":"Add"} job description</h1>
-        <form onSubmit={handleJobSubmit} className='space-y-2'>
+    <div className='block md:flex md:justify-between'>
+      <div className='w-full md:w-[50vw] p-3 md:p-10 bg-white'>
+        <h1 className='text-xl md:text-3xl font-bold mb-6'>{id?"Edit":"Add"} job description</h1>
+        <form onSubmit={handleJobSubmit} className='space-y-2 text-sm md:text-base'>
           <div className='flex items-center space-x-4'>
-            <label className='w-1/4 font-semibold'>Company Name</label>
+            <label className='w-1/3 md:w-1/4 font-semibold'>Company Name</label>
             <input
               type='text'
               placeholder='Enter your company name here'
-              className='w-3/4 px-3 py-2 border rounded-md'
+              className='w-3/4 px-2 md:px-3 py-1 md:py-2 border rounded-md'
               name='companyName'
               value={formData.companyName}
               onChange={handleChange}
@@ -138,11 +140,11 @@ const AddJob = () => {
           </div>
 
           <div className='flex items-center space-x-4'>
-            <label className='w-1/4 font-semibold'>Add logo URL</label>
+            <label className='w-1/3 md:w-1/4 font-semibold'>Add logo URL</label>
             <input
               type='text'
               placeholder='Enter the link'
-              className='w-3/4 px-3 py-2 border rounded-md'
+              className='w-3/4 px-2 md:px-3 py-1 md:py-2 border rounded-md'
               name='logoUrl'
               value={formData.logoUrl}
               onChange={handleChange}
@@ -150,11 +152,11 @@ const AddJob = () => {
           </div>
 
           <div className='flex items-center space-x-4'>
-            <label className='w-1/4 font-semibold'>Job Position</label>
+            <label className='w-1/3 md:w-1/4 font-semibold'>Job Position</label>
             <input
               type='text'
               placeholder='Enter job position'
-              className='w-3/4 px-3 py-2 border rounded-md'
+              className='w-3/4 px-2 md:px-3 py-1 md:py-2 border rounded-md'
               name='position'
               value={formData.position}
               onChange={handleChange}
@@ -162,11 +164,11 @@ const AddJob = () => {
           </div>
 
           <div className='flex items-center space-x-4'>
-            <label className='w-1/4 font-semibold'>CTC/Stipend</label>
+            <label className='w-1/3 md:w-1/4 font-semibold'>CTC/Stipend</label>
             <input
               type='text'
               placeholder='Enter Amount in rupees'
-              className='w-3/4 px-3 py-2 border rounded-md'
+              className='w-3/4 px-2 md:px-3 py-1 md:py-2 border rounded-md'
               name='CTC'
               value={formData.CTC}
               onChange={handleChange}
@@ -174,9 +176,9 @@ const AddJob = () => {
           </div>
 
           <div className='flex items-center space-x-4'>
-            <label className='w-1/4 font-semibold'>Experience Required:</label>
+            <label className='w-1/3 md:w-1/4 font-semibold'>Experience Required:</label>
             <select
-              className='w-3/4 px-3 py-2 border rounded-md'
+              className='w-3/4 px-2 md:px-3 py-1 md:py-2 border rounded-md'
               name='experience'
               value={formData.experience}
               onChange={handleChange}>
@@ -190,9 +192,9 @@ const AddJob = () => {
           </div>
 
           <div className='flex items-center space-x-4'>
-            <label className='w-1/4 font-semibold'>Job Type</label>
+            <label className='w-1/3 md:w-1/4 font-semibold'>Job Type</label>
             <select
-              className='w-3/4 px-3 py-2 border rounded-md'
+              className='w-3/4 px-2 md:px-3 py-1 md:py-2 border rounded-md'
               name='jobType'
               value={formData.jobType}
               onChange={handleChange}>
@@ -204,9 +206,9 @@ const AddJob = () => {
           </div>
 
           <div className='flex items-center space-x-4'>
-            <label className='w-1/4 font-semibold'>Remote/Office</label>
+            <label className='w-1/3 md:w-1/4 font-semibold'>Remote/Office</label>
             <select
-              className='w-3/4 px-3 py-2 border rounded-md'
+              className='w-3/4 px-2 md:px-3 py-1 md:py-2 border rounded-md'
               name='jobMode'
               value={formData.jobMode}
               onChange={handleChange}>
@@ -218,11 +220,11 @@ const AddJob = () => {
           </div>
 
           <div className='flex items-center space-x-4'>
-            <label className='w-1/4 font-semibold'>Location</label>
+            <label className='w-1/3 md:w-1/4 font-semibold'>Location</label>
             <input
               type='text'
               placeholder='Enter Location'
-              className='w-3/4 px-3 py-2 border rounded-md'
+              className='w-3/4 px-2 md:px-3 py-1 md:py-2 border rounded-md'
               name='location'
               value={formData.location}
               onChange={handleChange}
@@ -230,46 +232,46 @@ const AddJob = () => {
           </div>
 
           <div className='flex items-center space-x-4'>
-            <label className='w-1/4 font-semibold'>Job Description</label>
+            <label className='w-1/3 md:w-1/4 font-semibold'>Job Description</label>
             <textarea
               placeholder='Type the job description'
-              className='w-3/4 px-3 py-2 border rounded-md h-[120px]'
+              className='w-3/4 px-2 md:px-3 py-1 md:py-2 border rounded-md h-[90px] md:h-[120px]'
               name='jobDesc'
               value={formData.jobDesc}
               onChange={handleChange}></textarea>
           </div>
 
           <div className='flex items-center space-x-4'>
-            <label className='w-1/4 font-semibold'>About Company</label>
+            <label className='w-1/3 md:w-1/4 font-semibold'>About Company</label>
             <textarea
               placeholder='Type about your company'
-              className='w-3/4 px-3 py-2 border rounded-md h-[120px]'
+              className='w-3/4 px-2 md:px-3 py-1 md:py-2 border rounded-md h-[90px] md:h-[120px]'
               name='aboutCompany'
               value={formData.aboutCompany}
               onChange={handleChange}></textarea>
           </div>
 
           <div className='flex items-center space-x-4'>
-            <label className='w-1/4 font-semibold'>Skills Required</label>
+            <label className='w-1/3 md:w-1/4 font-semibold'>Skills Required</label>
             <input
               type='text'
               placeholder='Enter the must have skills'
-              className='w-3/4 px-3 py-2 border rounded-md'
+              className='w-3/4 px-2 md:px-3 py-1 md:py-2 border rounded-md'
               name='skills'
               value={skillInput}
               onKeyDown={handleSkillAdd}
               onChange={(e) => setSkillInput(e.target.value)}
             />
           </div>
-          <div className='flex space-x-3 my-2 ml-45'>
+          <div className='h-[20px] flex space-x-3 my-2 ml-2 md:ml-45'>
             {formData.skills.map((skill, index) => {
               return (
                 <div
                   key={index}
-                  className='flex items-center bg-red-100 rounded-lg overflow-hidden'>
-                  <span className='px-2 py-1 text-black text-sm'>{skill}</span>
+                  className='flex items-center bg-red-100 rounded-md overflow-hidden'>
+                  <span className='px-2 py-1 text-black text-xs md:text-sm flex flex-wrap gap-2'>{skill}</span>
                   <button
-                    className='bg-[#ED5353] px-1 py-1 text-white text-sm'
+                    className='bg-[#ED5353] px-1 py-1 text-white text-xs md:text-sm'
                     onClick={() => handleRemoveSkill(skill)}>
                     ✕
                   </button>
@@ -279,9 +281,9 @@ const AddJob = () => {
           </div>
 
           <div className='flex items-center space-x-4'>
-            <label className='w-1/4 font-semibold'>Company Size</label>
+            <label className='w-1/3 md:w-1/4 font-semibold'>Company Size</label>
             <select
-              className='w-3/4 px-3 py-2 border rounded-md'
+              className='w-3/4 px-2 md:px-3 py-1 md:py-2 border rounded-md'
               name='companySize'
               value={formData.companySize}
               onChange={handleChange}>
@@ -296,13 +298,13 @@ const AddJob = () => {
           </div>
 
           <div className='flex items-center space-x-4'>
-            <label className='w-1/4 font-semibold'>
+            <label className='w-1/3 md:w-1/4 font-semibold'>
               Additional Information
             </label>
             <input
               type='text'
               placeholder='Enter the additional information'
-              className='w-3/4 px-3 py-2 border rounded-md'
+              className='w-3/4 px-2 md:px-3 py-1 md:py-2 border rounded-md'
               name='information'
               value={formData.information}
               onChange={handleChange}
@@ -312,18 +314,18 @@ const AddJob = () => {
           <div className='flex justify-end gap-5 mt-4'>
             <button
               type='button'
-              className='cursor-pointer px-5 py-2 border rounded-md text-gray-500' onClick={()=>navigate("/")}>
+              className='cursor-pointer px-3 md:px-5 py-1 md:py-2 border rounded-md text-gray-500' onClick={()=>navigate("/")}>
               Cancel
             </button>
             <button
               type='submit'
-              className='cursor-pointer px-5 py-2 bg-[#ED5353] text-white rounded-md'>
+              className='cursor-pointer px-3 md:px-5 py-1 md:py-2 bg-[#ED5353] text-white rounded-md'>
               {id?"Edit":"+ Add"} Job
             </button>
           </div>
         </form>
       </div>
-      <div className='w-[40vw]  text-white'>
+      <div className='hidden md:block w-[40vw]  text-white'>
         <h2 className='absolute top-10 right-30 text-3xl font-semibold mb-4'>
           Recruiter add job details here
         </h2>
