@@ -60,7 +60,7 @@ const JobCards = ({job}) => {
    };
  
   return (
-  <div className='w-3/4 p-5 rounded-md mt-10 shadow-[0px_4px_10px_#FF202040]  mx-auto'>
+  <div className='w-3/4 px-5 pt-5 pb-2 rounded-md mt-10 shadow-[0px_4px_10px_#FF202040]  mx-auto'>
    <div className=' flex justify-between'>
     <div className='flex gap-3'>
       <div className="logo">
@@ -105,9 +105,8 @@ const JobCards = ({job}) => {
     </div>
    </div>   
    
-   <div>
-   <p className='text-[#717b9e] text-sm'>{convertFormat(job.postedOn)}</p>
-  </div>
+   <p className='text-[#717b9e] text-sm mt-3'>Posted: {convertFormat(job.postedOn)}</p>
+  
 </div>
 
   )

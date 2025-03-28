@@ -4,7 +4,7 @@ import { useAuth } from '../Context/AuthContext'
 const Navbar = () => {
   const {isLoggedIn,login,logOut}=useAuth();
   return (
-    <div className='w-full h-[12vh] p-5 flex items-center justify-between bg-[#ED5353] rounded-br-4xl rounded-bl-4xl'>
+    <div className='sticky top-0 w-full h-[12vh] p-5 flex items-center justify-between bg-[#ED5353] rounded-br-4xl rounded-bl-4xl'>
        <h1 className='font-semibold text-white text-2xl'>Jobfinder</h1>
        {isLoggedIn?<div className='flex gap-5 items-center'>
         <button onClick={logOut} className='text-lg cursor-pointer text-white border-2 border-white py-1 px-2 rounded-md'>Logout</button>
