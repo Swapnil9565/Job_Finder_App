@@ -1,7 +1,7 @@
 <h1>Job Finder App<h1>
 <div>
   <h4>Project Description:</h4>
-  <p>The Job Finder App is a full-stack web application built using the MERN (MongoDB, Express.js, React, Node.js) stack. It provides a seamless platform for job seekers to find employment opportunities based on their skills and preferences, while allowing authenticated users to post and manage job listings.</p>
+  The Job Finder App is a full-stack web application built using the MERN (MongoDB, Express.js, React, Node.js) stack. It provides a seamless platform for job seekers to find employment opportunities based on their skills and preferences, while allowing authenticated users to post and manage job listings.
   <br>
   <h4>Features:</h4>
   <ul>
