@@ -19,5 +19,8 @@ The **Job Finder App** enables users to:
 
 ## 🛠️ Tech Stack
 - **Frontend:** React.js, Tailwind CSS  
-- **Backend**
+- **Backend:** Node.js, Express.js  
+- **Database:** MongoDB  
+- **Authentication:** JSON Web Token (JWT)  
+- **Hosting:** Render / Vercel / Netlify  
 
