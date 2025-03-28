@@ -37,3 +37,5 @@ The **Job Finder App** enables users to:
 ### Job Details Page
 ![JobDetails](https://github.com/user-attachments/assets/94d4d83d-9e00-46d6-9744-e8b50bb7aab3)
 
+## Add Job Page
+![AddJobPage](https://github.com/user-attachments/assets/f6db860e-8927-400d-9bb5-317bb6c92ea7)
