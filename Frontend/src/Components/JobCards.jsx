@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import { useAuth } from '../Context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faIndianRupeeSign,  faUserGroup} from "@fortawesome/free-solid-svg-icons"
+import { faBriefcase, faIndianRupeeSign,  faLocationDot,  faUserGroup} from "@fortawesome/free-solid-svg-icons"
 import axios from 'axios'
 const JobCards = ({job}) => {
   const navigate=useNavigate();
@@ -32,25 +32,59 @@ const JobCards = ({job}) => {
     }
   
   }
+
+  const convertFormat = (timestamp) => {
+    const now = new Date();
+    const date = new Date(timestamp);
+    const diffInSeconds = Math.floor((now - date) / 1000);
+
+    if (diffInSeconds < 60) return "Just now";
+
+    const diffInMinutes = Math.floor(diffInSeconds / 60);
+    if (diffInMinutes < 60) return `${diffInMinutes}m ago`;
+
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    if (diffInHours < 24) return `${diffInHours}h ago`;
+
+    const diffInDays = Math.floor(diffInHours / 24);
+    if (diffInDays < 7) return `${diffInDays}d ago`;
+
+    const diffInWeeks = Math.floor(diffInDays / 7);
+    if (diffInWeeks < 4) return `${diffInWeeks}w ago`;
+
+    const diffInMonths = Math.floor(diffInDays / 30);
+    if (diffInMonths < 12) return `${diffInMonths}mo ago`;
+
+    const diffInYears = Math.floor(diffInDays / 365);
+    return `${diffInYears}y ago`;
+   };
  
   return (
-   <div className='mainCard p-5 rounded-md mt-10 shadow-[0px_4px_10px_#FF202040]   mx-auto flex justify-between w-3/4'>
+  <div className='w-3/4 p-5 rounded-md mt-10 shadow-[0px_4px_10px_#FF202040]  mx-auto'>
+   <div className=' flex justify-between'>
     <div className='flex gap-3'>
       <div className="logo">
         <img src={job?.logoUrl || "https://dummyimage.com/50/000/fff"} alt="" width={50}/>
       </div>
       <div className='flex flex-col gap-2'>
         <h1 className='font-bold text-lg'>{job?.position}</h1>
-        <div className='flex items-center gap-5'>
-          <div className='text-[#9C9C9C]'>
+        <div className='flex items-center gap-5 text-[#717b9e]'>
+          <div className='flex items-center gap-1'>
+          <FontAwesomeIcon icon={faBriefcase}/>
+          <span className=''>{job?.experience} years</span>
+          </div>
+          <div className='flex items-center gap-1'>
           <FontAwesomeIcon icon={faUserGroup}/>
-          <span className='ml-2'>{job?.companySize}</span>
+          <span className=''>{job?.companySize}</span>
           </div>
-          <div className='text-[#9C9C9C]'>
+          <div className='flex items-center gap-1'>
           <FontAwesomeIcon icon={faIndianRupeeSign}/>
-          {job.jobType=="Internship"?<span className='ml-2'>{job?.CTC} Per Month</span>:<span className='ml-2'>{job?.CTC} Lacs P.A.</span>}
+          {job.jobType=="Internship"?<span className=''>{job?.CTC} Per Month</span>:<span className=''>{job?.CTC} Lacs P.A.</span>}
           </div>
-          <p className='text-[#9C9C9C]'>{job?.location}</p>
+          <div className='flex gap-2 items-center'>
+          <FontAwesomeIcon icon={faLocationDot}/>
+          <span>{job?.location}</span>
+          </div>
         </div>
         <div className='flex gap-5 text-[#ED5353] font-semibold text-sm'>
           <p>{job?.jobType}</p>
@@ -65,11 +99,16 @@ const JobCards = ({job}) => {
         })}
        </div>
        <div className='mt-5 flex gap-5'>
-         {isLoggedIn&& <button className='text-[#ED5353] bg-white rounded-md px-2 py-1 cursor-pointer border-2 border-[#ED5353]'>Edit Job</button>}
+         {isLoggedIn&& <button className='text-[#ED5353] bg-white rounded-md px-2 py-1 cursor-pointer border-2 border-[#ED5353]' onClick={()=>navigate(`/editJob/${job._id}`)}>Edit Job</button>}
           <button className='bg-[#ED5353] text-white rounded-md px-2 py-1 cursor-pointer' onClick={()=>viewJobDetails(job._id)}>View Details</button>
        </div>
     </div>
-   </div>    
+   </div>   
+   
+   <div>
+   <p className='text-[#717b9e] text-sm'>{convertFormat(job.postedOn)}</p>
+  </div>
+</div>
 
   )
 }

@@ -16,6 +16,11 @@ const jobSchema=mongoose.Schema({
         type:String,
         required:true
     },
+    experience:{
+        type:String,
+        enum:["0-1","1-3","3-5","5-10","10+"],
+        required:true
+    },
     jobType:{
         type:String,
         enum:["Full Time","Part Time","Internship"],
