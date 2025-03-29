@@ -66,7 +66,7 @@ const JobCards = ({job}) => {
       {/* Left Side - Job Info */}
       <div className='flex flex-col md:flex-row gap-3'>
         <div className='logo flex justify-center md:block'>
-          <img src={job?.logoUrl || 'https://dummyimage.com/50/000/fff'} alt='' className='rounded-md w-[100px] md:w-[50px]' />
+         {job.logoUrl?<img src={job?.logoUrl || ''} alt='' className='rounded-md w-[100px] md:w-[50px]' />:<p className='w-12 h-[7vh] flex items-center justify-center font-bold text-2xl rounded-[100%] text-white bg-[#ED5353] p-1'>{job?.companyName.split("")[0]}</p>} 
         </div>
         <div className='flex flex-col gap-2 text-center md:text-left'>
           <h1 className='font-bold text-lg'>{job?.position}</h1>
