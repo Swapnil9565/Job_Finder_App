@@ -24,7 +24,10 @@ const AddJob = () => {
 
   const [skillInput, setSkillInput] = useState("");
   const handleSkillAdd = (e) => {
-    if (e.key === "Enter" && skillInput.trim()) {
+    if (
+      (e.key === "Enter" || e.nativeEvent.inputType === "insertLineBreak") &&
+      skillInput.trim()
+    ) {
       e.preventDefault();
       setFormData((prev) => ({
         ...prev,
@@ -33,6 +36,7 @@ const AddJob = () => {
       setSkillInput("");
     }
   };
+  
 
   const handleRemoveSkill = (skill) => {
     setFormData((prev) => ({
@@ -260,6 +264,7 @@ const AddJob = () => {
               name='skills'
               value={skillInput}
               onKeyDown={handleSkillAdd}
+              onInput={handleSkillAdd}
               onChange={(e) => setSkillInput(e.target.value)}
             />
           </div>
