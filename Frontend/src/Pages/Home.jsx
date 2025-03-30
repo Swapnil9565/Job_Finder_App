@@ -14,7 +14,7 @@ const Home = () => {
   
   useEffect(()=>{
     const fetchAllJobs=async()=>{
-         const res=await axios.get("http://localhost:3000/api/jobs/allJobs");
+         const res=await axios.get("https://job-finder-app-backend-8snr.onrender.com/api/jobs/allJobs");
          if(res.status===200){ 
             setJobs(res.data.allJobs);
             setFilteredJobs(res.data.allJobs);

@@ -64,7 +64,7 @@ const Register = () => {
     }
 
 try {
-  const res=await axios.post("http://localhost:3000/api/auth/signUp",formData,{
+  const res=await axios.post("https://job-finder-app-backend-8snr.onrender.com/api/auth/signUp",formData,{
     headers:{
       "Content-Type":"application/json",
     }

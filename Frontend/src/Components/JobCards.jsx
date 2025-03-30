@@ -17,7 +17,7 @@ const JobCards = ({job}) => {
       alert("Something went wrong");
     }
     try {
-      const res=await axios.get(`http://localhost:3000/api/jobs/jobDetails/${id}`,{
+      const res=await axios.get(`https://job-finder-app-backend-8snr.onrender.com/api/jobs/jobDetails/${id}`,{
         headers:{
           "Content-Type":"application/json",
           "Authorization":localStorage.getItem("token")
