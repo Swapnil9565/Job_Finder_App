@@ -25,7 +25,7 @@ const AddJob = () => {
   const [skillInput, setSkillInput] = useState("");
   const handleSkillAdd = (e) => {
     if (
-      (e.key === "Enter" || e.nativeEvent.inputType === "insertLineBreak") &&
+      (e.key === "Enter" || e.nativeEvent.inputType === "insertLineBreak"|| e.type === "blur") &&
       skillInput.trim()
     ) {
       e.preventDefault();
@@ -265,6 +265,7 @@ const AddJob = () => {
               value={skillInput}
               onKeyDown={handleSkillAdd}
               onInput={handleSkillAdd}
+              onBlur={handleSkillAdd} 
               onChange={(e) => setSkillInput(e.target.value)}
             />
           </div>
