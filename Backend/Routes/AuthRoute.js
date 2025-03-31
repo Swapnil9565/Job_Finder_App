@@ -25,7 +25,9 @@ router.post("/signUp",async(req,res)=>{
             mobile,
             password:hashedPassword
         })
-        res.status(200).json({message:"User registered Successfully",createdUser});
+        const payload={id:createdUser._id}
+        const token=jwt.sign(payload,process.env.JWT_SECRET_KEY);
+        res.status(200).json({message:"User registered Successfully",token,createdUser});
        
     } catch (error) {
         res.status(500).json({message:error.message});
