@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faBriefcase, faIndianRupeeSign,  faLocationDot,  faUserGroup} from "@fortawesome/free-solid-svg-icons"
 import axios from 'axios'
 const JobCards = ({job}) => {
-  const [user,setUser]=useState(null);
+  const {user}=useAuth();
   const navigate=useNavigate();
   const [jobDetails,setJobDetails]=useState(null);
 
@@ -33,13 +33,7 @@ const JobCards = ({job}) => {
     }
   
   }
-  
-  useEffect(()=>{
-    const storedUser=localStorage.getItem("user");
-    if(storedUser){
-       setUser(JSON.parse(storedUser));
-    }
-  },[])
+
   const convertFormat = (timestamp) => {
     const now = new Date();
     const date = new Date(timestamp);
@@ -114,8 +108,6 @@ const JobCards = ({job}) => {
           ))}
         </div>
         <div className='flex gap-3 mt-2'>
-          {console.log(job?.createdBy)}
-          {console.log(user?._id)}
           {isLoggedIn && job?.createdBy===user?._id && (
             <button
               className='cursor-pointer text-sm md:text-base text-[#ED5353] bg-white rounded-md px-3 py-1 border-2 border-[#ED5353] hover:bg-[#ED5353] hover:text-white transition-all'

@@ -3,7 +3,7 @@ import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import {useAuth} from "../Context/AuthContext";
 const JobDetails = () => {
   const navigate=useNavigate();
-  const {isLoggedIn}=useAuth();
+  const {isLoggedIn,user}=useAuth();
   const { id } = useParams(); 
   const location = useLocation();
   const job = location.state?.jobDetails;
@@ -51,7 +51,7 @@ const JobDetails = () => {
             <h1 className="text-lg md:text-2xl font-bold mt-2">{job.position}</h1>
             <p className="text-sm md:text-base text-[#ED5353] font-semibold">{job.location} | India</p>
           </div>
-          {isLoggedIn && (
+          {isLoggedIn && job.createdBy===user?._id && (
             <button 
               className='mt-2 text-sm md:text-base sm:mt-0 px-3 py-2 bg-[#ED5353] text-white rounded-md font-semibold cursor-pointer' 
               onClick={() => navigate(`/editJob/${job._id}`)}
