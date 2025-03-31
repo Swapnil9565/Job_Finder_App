@@ -65,7 +65,7 @@ const JobDetails = () => {
           {job.jobType === "Internship" ? (
             <p>💰 Stipend: <span className="text-black">Rs.{job.CTC}</span></p>
           ) : (
-            <p>💰 CTC: <span className="text-black">Rs {job.CTC} LPA</span></p>
+            <p>💰 CTC: <span className="text-black">{job.CTC==="Not disclosed"?job.CTC:`Rs ${job.CTC} LPA`}</span></p>
           )}
           {job.jobType === "Internship" && <p>⏳ Duration: <span className="text-black">6 Months</span></p>}
         </div>
