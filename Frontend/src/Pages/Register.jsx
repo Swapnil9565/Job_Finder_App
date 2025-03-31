@@ -3,8 +3,10 @@ import toast, { Toaster } from 'react-hot-toast';
 import { Link,useNavigate } from 'react-router-dom'
 import img from "../Assets/AuthBanner.png"
 import  axios from "axios";
+import { useAuth } from '../Context/AuthContext';
 
 const Register = () => {
+  const {login}=useAuth();
   const navigate=useNavigate();
   const [formData,setFormData]=useState({
     name:"",
@@ -71,7 +73,8 @@ try {
   })
   if(res.status===200){
      toast.success(res.data.message);
-   navigate("/login");
+     login();
+     navigate("/login");
    return ;
   }
  
