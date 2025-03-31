@@ -24,6 +24,7 @@ export const AuthProvider = ({children}) => {
         toast.success("Log out Successfully")
         localStorage.removeItem("token");
         localStorage.removeItem("isLoggedIn");
+        localStorage.removeItem("user");
      };
 
      return (
