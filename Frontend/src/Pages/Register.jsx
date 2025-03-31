@@ -74,7 +74,9 @@ try {
   if(res.status===200){
      toast.success(res.data.message);
      login();
-     navigate("/login");
+     localStorage.setItem("token",res.data.token);
+      localStorage.setItem("user",JSON.stringify(res.data.user));
+      navigate("/");
    return ;
   }
  
