@@ -1,14 +1,41 @@
-import React from 'react'
+import React,{useEffect, useState} from 'react'
+import toast, { Toaster } from 'react-hot-toast';
 import { useAuth } from '../Context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faBriefcase, faIndianRupeeSign,  faLocationDot,  faUserGroup} from "@fortawesome/free-solid-svg-icons"
-
-const JobCards = ({job,viewJobDetails,loading}) => {
+import axios from 'axios'
+const JobCards = ({job}) => {
   const {user}=useAuth();
   const navigate=useNavigate();
+  const [jobDetails,setJobDetails]=useState(null);
+  const [loading,setLoading]=useState(false);
   const {isLoggedIn}=useAuth();
 
+  const viewJobDetails=async(id)=>{
+    
+    if(!id){
+      alert("Something went wrong");
+    }
+    setLoading(true);
+    try {
+      const res=await axios.get(`https://job-finder-app-backend-8snr.onrender.com/api/jobs/jobDetails/${id}`,{
+        headers:{
+          "Content-Type":"application/json",
+          "Authorization":localStorage.getItem("token")
+        }
+      });
+      if(res.status===200){
+        setJobDetails(res.data.jobDetails);
+        navigate(`/jobDetails/${id}`,{ state: { jobDetails: res.data.jobDetails } });
+      }
+    } catch (error) {
+      toast.error(error);
+    }finally{
+      setLoading(false)
+    }
+  
+  }
 
   const convertFormat = (timestamp) => {
     const now = new Date();
@@ -38,6 +65,7 @@ const JobCards = ({job,viewJobDetails,loading}) => {
  
   return (
     <div className='w-[90vw]  md:w-3/4 px-2 md:px-5 pt-5 pb-2 rounded-md mt-10 shadow-[0px_4px_10px_#FF202040] mx-auto bg-white'>
+    <Toaster position='top-center' reverseOrder={false} />
     <div className='flex flex-col md:flex-row justify-between gap-4'>
       {/* Left Side - Job Info */}
       <div className='flex flex-col md:flex-row gap-3'>
@@ -94,9 +122,8 @@ const JobCards = ({job,viewJobDetails,loading}) => {
           <button
             className='text-sm md:text-base bg-[#ED5353] text-white rounded-md px-3 cursor-pointer py-1 hover:opacity-80 transition-all'
             onClick={() => viewJobDetails(job._id)}
-            disabled={loading}
           >
-             {loading ? "Loading..." : "View Details"}
+            View Details
           </button>
         </div>
       </div>
