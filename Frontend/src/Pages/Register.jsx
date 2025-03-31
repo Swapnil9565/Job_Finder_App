@@ -75,7 +75,7 @@ try {
      toast.success(res.data.message);
      login();
      localStorage.setItem("token",res.data.token);
-      localStorage.setItem("user",JSON.stringify(res.data.createdUser));
+      localStorage.setItem("user",JSON.stringify(res.data.user));
       navigate("/");
    return ;
   }

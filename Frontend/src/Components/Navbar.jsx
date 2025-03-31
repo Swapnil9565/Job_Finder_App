@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import {Link} from "react-router-dom"
 import { useAuth } from '../Context/AuthContext'
 const Navbar = () => {
-  const {isLoggedIn,login,logOut}=useAuth();
+  const {isLoggedIn,logOut}=useAuth();
   const [user,setUser]=useState(null);
 
   useEffect(()=>{
@@ -23,7 +23,7 @@ const Navbar = () => {
       ) : (
         <div className="flex items-center gap-4 bg-[#FF6B6B] rounded-b-full h-[12vh] px-5 sm:px-10 md:px-20">
           <Link to="/login">
-            <button className='border-2 border-white text-white bg-transparent rounded-md font-semibold cursor-pointer px-1 text-sm md:text-base md:px-3 py-1' onClick={login}>Login</button>
+            <button className='border-2 border-white text-white bg-transparent rounded-md font-semibold cursor-pointer px-1 text-sm md:text-base md:px-3 py-1'>Login</button>
           </Link>
           <Link to="/register">
             <button className='border-2 border-white text-[#ED5353] bg-white rounded-md font-semibold cursor-pointer px-1 text-sm md:text-base md:px-3 py-1'>Register</button>

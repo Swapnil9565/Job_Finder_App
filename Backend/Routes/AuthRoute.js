@@ -27,7 +27,7 @@ router.post("/signUp",async(req,res)=>{
         })
         const payload={id:createdUser._id}
         const token=jwt.sign(payload,process.env.JWT_SECRET_KEY);
-        res.status(200).json({message:"User registered Successfully",token,createdUser});
+        res.status(200).json({message:"User registered Successfully",token,user: createdUser,});
        
     } catch (error) {
         res.status(500).json({message:error.message});

@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom'
 import img from "../Assets/AuthBanner.png"
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../Context/AuthContext';
 const Login = () => {
+  const {login}=useAuth();
   const navigate=useNavigate();
    const [loginFormData,setLoginFormData]=useState({
     email:"",
@@ -27,6 +29,7 @@ const Login = () => {
     })
     if(res.status===200){
       toast.success(res.data.message);
+      login();
       localStorage.setItem("token",res.data.token);
       localStorage.setItem("user",JSON.stringify(res.data.user));
       navigate("/");
