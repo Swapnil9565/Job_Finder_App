@@ -79,10 +79,16 @@ router.get("/jobDetails/:id",async(req,res)=>{
 // Update job details
 router.put("/editJob/:id",authMiddleware,async(req,res)=>{
     try{
-    const updateJob=await JobModel.findByIdAndUpdate(req.params.id,req.body,{new:true});
-    if(!updateJob){
+    const {id}=req.params;
+    const userId=req.user.id;
+    const job = await JobModel.findById(id);
+    if(!job){
         return res.status(404).json({message:"Job not found"});
     }
+    if(job.createdBy.toString()!==userId){
+        return res.status(403).json({message:"Unauthorized: You cannot edit this job"});
+    }
+    const updateJob=await JobModel.findByIdAndUpdate(id,req.body,{new:true});
     res.status(200).json({message:"Job details updated successfully",updateJob});
 }catch(error){
     res.status(500).json({message:error.message});
