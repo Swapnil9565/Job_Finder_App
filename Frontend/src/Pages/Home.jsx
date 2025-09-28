@@ -1,9 +1,10 @@
-import React,{useEffect,useState} from 'react'
+import {useEffect,useState} from 'react'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import axios from 'axios'
 import JobSearchArea from "../Components/JobSearch"
 import JobList from '../Components/JobList'
 import { faSort } from '@fortawesome/free-solid-svg-icons'
+import API from '../api'
 
 const Home = () => {
   const [jobs,setJobs]=useState([]); 
@@ -14,7 +15,7 @@ const Home = () => {
   
   useEffect(()=>{
     const fetchAllJobs=async()=>{
-         const res=await axios.get("https://job-finder-app-backend-8snr.onrender.com/api/jobs/allJobs");
+         const res=await API.get("/api/jobs/allJobs");
          if(res.status===200){ 
             setJobs(res.data.allJobs);
             setFilteredJobs(res.data.allJobs);

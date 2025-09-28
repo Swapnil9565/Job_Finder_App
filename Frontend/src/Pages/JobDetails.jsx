@@ -1,10 +1,9 @@
-import React from 'react';
-import { useNavigate, useLocation, useParams } from 'react-router-dom';
+
+import { useNavigate, useLocation } from 'react-router-dom';
 import {useAuth} from "../Context/AuthContext";
 const JobDetails = () => {
   const navigate=useNavigate();
   const {isLoggedIn,user}=useAuth();
-  const { id } = useParams(); 
   const location = useLocation();
   const job = location.state?.jobDetails;
 

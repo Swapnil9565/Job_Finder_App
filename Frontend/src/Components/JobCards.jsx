@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faBriefcase, faIndianRupeeSign,  faLocationDot,  faUserGroup} from "@fortawesome/free-solid-svg-icons"
 import axios from 'axios'
+import API from '../api';
 const JobCards = ({job}) => {
   const {user}=useAuth();
   const navigate=useNavigate();
@@ -19,7 +20,7 @@ const JobCards = ({job}) => {
     }
     setLoading(true);
     try {
-      const res=await axios.get(`https://job-finder-app-backend-8snr.onrender.com/api/jobs/jobDetails/${id}`,{
+      const res=await API.get(`/api/jobs/jobDetails/${id}`,{
         headers:{
           "Content-Type":"application/json",
           "Authorization":localStorage.getItem("token")

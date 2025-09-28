@@ -5,6 +5,7 @@ import img from "../Assets/AuthBanner.png"
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../Context/AuthContext';
+import API from '../api';
 const Login = () => {
   const {login}=useAuth();
   const navigate=useNavigate();
@@ -22,7 +23,7 @@ const Login = () => {
     e.preventDefault();
     try{
   
-    const res=await axios.post("https://job-finder-app-backend-8snr.onrender.com/api/auth/login",loginFormData,{
+    const res=await API.post("/api/auth/login",loginFormData,{
       headers:{
         "Content-Type":"application/json"
       }

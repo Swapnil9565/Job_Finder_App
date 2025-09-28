@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../Context/AuthContext"
 const JobSearch = ({handleSearchChange,handleSearch,query1,query2,query3}) => {

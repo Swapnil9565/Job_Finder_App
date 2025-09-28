@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast';
 import { Link,useNavigate } from 'react-router-dom'
 import img from "../Assets/AuthBanner.png"
-import  axios from "axios";
 import { useAuth } from '../Context/AuthContext';
+import API from '../api';
 
 const Register = () => {
   const {login}=useAuth();
@@ -66,7 +66,7 @@ const Register = () => {
     }
 
 try {
-  const res=await axios.post("https://job-finder-app-backend-8snr.onrender.com/api/auth/signUp",formData,{
+  const res=await API.post("/api/auth/signUp",formData,{
     headers:{
       "Content-Type":"application/json",
     }
