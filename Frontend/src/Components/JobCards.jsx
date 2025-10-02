@@ -20,7 +20,7 @@ const JobCards = ({job}) => {
     }
     setLoading(true);
     try {
-      const res=await API.get(`/api/jobs/jobDetails/${id}`,{
+      const res=await API.get(`/jobs/jobDetails/${id}`,{
         headers:{
           "Content-Type":"application/json",
           "Authorization":localStorage.getItem("token")
