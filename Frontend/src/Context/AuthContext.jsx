@@ -11,8 +11,13 @@ export const AuthProvider = ({children}) => {
 
      useEffect(() => {
       const storedLoginState = localStorage.getItem("isLoggedIn");
+      const storedUser = localStorage.getItem("user");
       if (storedLoginState === "true") {
         setIsLoggedIn(true);
+      }
+
+       if (storedUser) {
+          setUser(JSON.parse(storedUser));
       }
     }, []);
 
