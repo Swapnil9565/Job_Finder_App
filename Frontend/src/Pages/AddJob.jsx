@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import toast,{Toaster} from "react-hot-toast";
 import {useNavigate,useParams} from "react-router-dom";
 import img from "../Assets/JobPosting.png";
@@ -55,7 +55,7 @@ const AddJob = () => {
     const fetchJobData=async()=>{
       if(id){
       try {
-        const res=await API.get(`/api/jobs/jobDetails/${id}`,{
+        const res=await API.get(`/jobs/jobDetails/${id}`,{
           headers:{
             "Content-Type":"application/json"
           }
@@ -93,8 +93,8 @@ const AddJob = () => {
       }
       else{
       //Creating new jobs
-       res = await axios.post(
-        "https://job-finder-app-backend-8snr.onrender.com/api/jobs/addJob",
+       res = await API.post(
+        "/jobs/addJob",
         formData,
         {
           headers: {

@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast';
 import { Link } from 'react-router-dom'
 import img from "../Assets/AuthBanner.png"
-import axios from 'axios';
+
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../Context/AuthContext';
 import API from '../api';
