@@ -23,7 +23,7 @@ const Login = () => {
     e.preventDefault();
     try{
   
-    const res=await API.post("/api/auth/login",loginFormData,{
+    const res=await API.post("/auth/login",loginFormData,{
       headers:{
         "Content-Type":"application/json"
       }

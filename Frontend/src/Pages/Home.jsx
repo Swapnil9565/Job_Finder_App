@@ -1,6 +1,5 @@
 import {useEffect,useState} from 'react'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import axios from 'axios'
 import JobSearchArea from "../Components/JobSearch"
 import JobList from '../Components/JobList'
 import { faSort } from '@fortawesome/free-solid-svg-icons'
@@ -15,7 +14,7 @@ const Home = () => {
   
   useEffect(()=>{
     const fetchAllJobs=async()=>{
-         const res=await API.get("/api/jobs/allJobs");
+         const res=await API.get("/jobs/allJobs");
          if(res.status===200){ 
             setJobs(res.data.allJobs);
             setFilteredJobs(res.data.allJobs);

@@ -66,7 +66,7 @@ const Register = () => {
     }
 
 try {
-  const res=await API.post("/api/auth/signUp",formData,{
+  const res=await API.post("/auth/signUp",formData,{
     headers:{
       "Content-Type":"application/json",
     }

@@ -79,7 +79,7 @@ const AddJob = () => {
       let res;
       if(id){
         //updating existing job details
-          res=await axios.put(`https://job-finder-app-backend-8snr.onrender.com/api/jobs/editJob/${id}`,formData,{
+          res=await API.put(`/jobs/editJob/${id}`,formData,{
           headers:{
             "Content-Type":"application/json",
             Authorization:localStorage.getItem("token")
