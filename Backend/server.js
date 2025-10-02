@@ -14,9 +14,11 @@ app.use(cors());
 app.use(express.json());  
 app.use(express.urlencoded({ extended: true })); 
 
+let allowedOrigins =process.env.NODE_ENV === "development"?[process.env.DEV_ORIGIN]:[process.env.PROD_ORIGIN]
+
 app.use(
     cors({
-      origin: "https://job-finder-app-frontend.onrender.com", 
+      origin:allowedOrigins,
       methods: ["GET", "POST", "PUT", "DELETE"], 
       allowedHeaders: ["Content-Type", "Authorization"],
     })
