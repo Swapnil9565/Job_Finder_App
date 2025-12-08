@@ -10,9 +10,6 @@ const connectDB=require("./Config/DBConfig");
 dotenv.config();
 
 const app=express();
-app.use(cors());
-app.use(express.json());  
-app.use(express.urlencoded({ extended: true })); 
 
 let allowedOrigins =process.env.NODE_ENV === "development"?[process.env.DEV_ORIGIN]:[process.env.PROD_ORIGIN]
 
@@ -24,6 +21,8 @@ app.use(
     })
   );
 
+app.use(express.json());  
+app.use(express.urlencoded({ extended: true })); 
 //Routers
 app.use("/api/auth",authRouter);
 app.use("/api/jobs",jobRouter);
